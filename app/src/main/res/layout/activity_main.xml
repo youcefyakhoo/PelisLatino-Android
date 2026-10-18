@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://tools.android.com/tools"
+    android:id="@+id/drawer_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_wallpaper"
+    android:fitsSystemWindows="true"
+    tools:context=".Main">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/raiz_tv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <!-- Toolbar: fondo y tipografía vienen de Widget.Blabongo.Toolbar (tema). -->
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:elevation="6dp"
+            android:theme="@style/ThemeOverlay.Blabongo.Toolbar"
+            app:layout_constraintTop_toTopOf="parent"
+            app:popupTheme="@style/ThemeOverlay.PelisLatino.Popup"
+            app:titleTextAppearance="@style/TextAppearance.Blabongo.ToolbarTitle" />
+
+        <!-- v9.4: fuera el contenedor del banner de Start.io. La publicidad se
+             quitó entera (banner, MREC intercalados en Canales y en Agenda, y el
+             SDK). El contenido ya llega hasta abajo. -->
+
+        <!-- ══ RAÍL DE NAVEGACIÓN (solo TV) ══
+             En un televisor, abrir un drawer a pantalla completa se siente mal y
+             además obliga a un viaje de foco de ida y vuelta. Lo normal en Android
+             TV es un raíl fijo a la izquierda.
+
+             En el teléfono queda GONE: una vista GONE colapsa a un punto en el
+             borde, así que la restricción start_toEndOf del contenido no deja
+             hueco y la pantalla sigue usando todo el ancho.
+
+             Las filas NO están en el XML: las pone Main desde el mismo menú del
+             drawer (res/menu/activity_main_drawer.xml), para que no haya dos
+             listas que se puedan desincronizar. -->
+        <LinearLayout
+            android:id="@+id/rail_tv"
+            android:layout_width="200dp"
+            android:layout_height="0dp"
+            android:background="@color/pelis_nav_bg"
+            android:orientation="vertical"
+            android:paddingTop="12dp"
+            android:paddingBottom="12dp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/toolbar"
+            tools:visibility="visible">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                android:paddingBottom="12dp"
+                android:text="@string/app_name"
+                android:textAppearance="@style/TextAppearance.Blabongo.Title" />
+
+            <LinearLayout
+                android:id="@+id/rail_opciones"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" />
+        </LinearLayout>
+
+        <!-- Contenedor de los fragments.
+             SIN fondo propio: en web.dramalive.cc el degradado teal se ve por
+             detrás de todo el contenido, y las cabeceras son veladuras encima.
+             Antes llevaba @color/pelis_bg opaco, que tapaba el fondo.
+             Con el raíl visible arranca a su derecha; con el raíl GONE, al borde. -->
+        <FrameLayout
+            android:id="@+id/fragment_container"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@android:color/transparent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/rail_tv"
+            app:layout_constraintTop_toBottomOf="@id/toolbar" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/nav_view"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:background="@color/pelis_nav_bg"
+        android:fitsSystemWindows="true"
+        android:elevation="16dp"
+        app:elevation="16dp"
+        app:headerLayout="@layout/nav_header_main"
+        app:itemIconTint="@color/pelis_nav_item_icon"
+        app:itemIconSize="@dimen/icon_lg"
+        app:itemShapeFillColor="@color/pelis_nav_item_fill"
+        app:itemShapeAppearanceOverlay="@style/ShapeAppearance.Blabongo.NavItem"
+        app:itemTextAppearance="@style/TextAppearance.Blabongo.NavItem"
+        app:itemTextColor="@color/pelis_nav_item_text"
+        app:menu="@menu/activity_main_drawer" />
+
+</androidx.drawerlayout.widget.DrawerLayout>

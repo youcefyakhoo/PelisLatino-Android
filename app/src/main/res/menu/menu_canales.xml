@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Barra de Canales, en la barra de la actividad (una sola barra, como el
+     Drama Live real: ☰ + título + 🔍 + ⟳).
+
+     El buscador va como ACTION VIEW con collapseActionView: se ve el icono y al
+     pulsarlo se despliega la píldora, que es exactamente lo que hace Drama
+     (captura probe-search: el título se recorta a "Sp…" y aparece el campo). -->
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/accion_buscar_canales"
+        android:icon="@drawable/ic_pelis_search"
+        android:title="@string/canales_buscar_hint"
+        app:actionViewClass="androidx.appcompat.widget.SearchView"
+        app:showAsAction="always|collapseActionView" />
+
+    <item
+        android:id="@+id/accion_refrescar_canales"
+        android:icon="@drawable/ic_refresh"
+        android:title="@string/canales_accion_refrescar"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/accion_fuente_canales"
+        android:icon="@drawable/ic_playlist_add"
+        android:title="@string/canales_accion_fuente"
+        app:showAsAction="always" />
+
+</menu>

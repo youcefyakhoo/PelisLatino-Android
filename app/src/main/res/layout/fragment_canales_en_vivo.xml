@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Canales en vivo.
+
+     v9.6: SIN cabecera propia. Antes había dos barras —la de la actividad
+     (☰ BLABONGO) y esta (título + buscador + 2 iconos)— y el Drama Live real
+     gasta UNA sola: ☰ + título + 🔍 + ⟳. El título y las tres acciones viven
+     ahora en la barra de la actividad (res/menu/menu_canales.xml), así que esta
+     pantalla empieza directamente con la tira de tópicos.
+
+     Lo que queda: tira de tópicos (se oculta sola si la fuente no trae más de un
+     grupo), la rejilla de tiles cuadrados, el estado vacío y el progreso. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <!-- Tira de tópicos derivada de Canal.category y de Canal.pais. Se oculta
+         sola si la fuente no trae más de un grupo, para no dejar una fila vacía. -->
+    <HorizontalScrollView
+        android:id="@+id/bloqueTabsCanales"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:paddingStart="@dimen/space_2"
+        android:paddingTop="@dimen/space_2"
+        android:paddingEnd="@dimen/space_2"
+        android:scrollbars="none"
+        android:visibility="gone"
+        tools:visibility="visible">
+
+        <!-- OJO: el contenedor de las pestañas no puede llevar atributo "divider" con un
+             @dimen: ese atributo espera un Drawable y revienta al inflar (InflateException
+             en runtime; el build y lint lo dejan pasar). El separador de los chips vive en
+             el margen de item_tab_canal. -->
+        <LinearLayout
+            android:id="@+id/contenedorTabsCanales"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" />
+    </HorizontalScrollView>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <!-- focusable: en Android TV el mando necesita un destino; sin esto la
+             primera flecha no hace nada. -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewCanales"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:focusable="true"
+            android:padding="@dimen/canal_grid_pad"
+            android:scrollbars="none"
+            tools:listitem="@layout/item_canal" />
+
+        <LinearLayout
+            android:id="@+id/grupoVacioCanales"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="@dimen/space_5"
+            android:visibility="gone"
+            tools:visibility="visible">
+
+            <ImageView
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:contentDescription="@null"
+                android:src="@drawable/ds"
+                app:tint="@color/pelis_text_disabled" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_2"
+                android:text="@string/canales_vacio_titulo"
+                android:textAppearance="@style/TextAppearance.Blabongo.Title" />
+
+            <TextView
+                android:id="@+id/txtVacioCanales"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_1"
+                android:gravity="center"
+                android:text="@string/canales_vacio_mensaje"
+                android:textAppearance="@style/TextAppearance.Blabongo.Body" />
+        </LinearLayout>
+
+        <ProgressBar
+            android:id="@+id/progressBarCanales"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:indeterminateTint="@color/pelis_accent"
+            android:visibility="gone"
+            tools:visibility="visible" />
+    </FrameLayout>
+
+</LinearLayout>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Tile de canal: CUADRADO, con el nombre DENTRO en una banda inferior.
+
+     Esto es lo que pintan las capturas del Drama Live real (`cur-00.png`,
+     `nav-rt.png`, `sec-tv.png`): rejilla de 3 columnas, tile cuadrado con el
+     logo centrado y el nombre en la banda de abajo, sobre fondo translúcido y
+     con un filete.
+
+     La v9.2 lo pasó a filas (logo de 100 dp + nombre al lado) leyendo
+     `item_live_list.xml` del APK. Fue un error: ese layout existe en el APK pero
+     no es la pantalla que la app pinta, y las capturas del cliente real lo
+     desmienten. Se vuelve al tile.
+
+     Los ids no cambian (imgCanal, txtNombreCanal), asi que CanalAdapter sigue
+     funcionando sin tocarlo. -->
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/Widget.Blabongo.Tile"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/imgCanal"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@drawable/bg_tile_losa"
+            android:contentDescription="@null"
+            android:padding="@dimen/canal_logo_pad"
+            android:scaleType="fitCenter"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/txtNombreCanal"
+            style="@style/Widget.Blabongo.TileName"
+            app:layout_constraintBottom_toBottomOf="@id/imgCanal"
+            app:layout_constraintEnd_toEndOf="@id/imgCanal"
+            app:layout_constraintStart_toStartOf="@id/imgCanal"
+            tools:text="Directv Sports" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.google.android.material.card.MaterialCardView>

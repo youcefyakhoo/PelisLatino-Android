@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Fondo de una fila del raíl de TV.
+
+     Tres estados, y el orden importa: la sección ACTIVA enfocada conserva el
+     azul y además muestra el anillo, igual que hace la tira de categorías
+     (drawable/bg_canal_tab). -->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:state_selected="true" android:state_focused="true">
+        <shape android:shape="rectangle">
+            <solid android:color="@color/pelis_primary" />
+            <stroke android:width="2dp" android:color="@color/pelis_text" />
+            <corners android:radius="12dp" />
+        </shape>
+    </item>
+
+    <item android:state_selected="true">
+        <shape android:shape="rectangle">
+            <solid android:color="@color/pelis_primary" />
+            <corners android:radius="12dp" />
+        </shape>
+    </item>
+
+    <item android:state_focused="true">
+        <shape android:shape="rectangle">
+            <solid android:color="@color/pelis_cyan_tint" />
+            <stroke android:width="2dp" android:color="@color/pelis_text" />
+            <corners android:radius="12dp" />
+        </shape>
+    </item>
+
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="@android:color/transparent" />
+            <corners android:radius="12dp" />
+        </shape>
+    </item>
+</selector>

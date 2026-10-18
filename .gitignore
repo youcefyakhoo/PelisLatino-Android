@@ -1,0 +1,56 @@
+*.iml
+.gradle
+/local.properties
+/.idea/caches
+/.idea/libraries
+/.idea/modules.xml
+/.idea/workspace.xml
+/.idea/navEditor.xml
+/.idea/assetWizardSettings.xml
+.DS_Store
+/build
+/captures
+.externalNativeBuild
+.cxx
+local.properties
+
+# Android Studio
+.idea/
+*.iml
+local.properties
+build/
+captures/
+__pycache__/
+
+# Scratch de la replica de web.dramalive.cc: capturas, scripts de medicion y
+# validadores. No es parte de la app; ver docs/ESTILO-DRAMALIVE-WEB.md.
+/recon-dramalive/
+# GRADLE_USER_HOME del sandbox (el sandbox no deja escribir en ~/.gradle).
+/.gradle-home/
+# AVD de prueba que se intento crear (no cupo en disco).
+/.android-home/
+# Caché de npm del sandbox.
+/.npm-cache/
+
+# ══ Lo que NUNCA va al repo ══
+# Binarios: se distribuyen aparte, no en el historial de git.
+*.apk
+*.aab
+/app/release/
+
+# El APK de Drama Live que se usa para comparar el estilo. Es de terceros y tiene
+# copyright: no se publica.
+/dramalive.apk
+
+# Scratch de depuración. OJO: cj*.txt son TARROS DE COOKIES reales
+# ("# Netscape HTTP Cookie File"); publicarlos filtra sesiones.
+/debug-scratch/
+
+# Firma y credenciales.
+*.jks
+*.keystore
+*.p12
+*.pem
+*.key
+secrets.properties
+
