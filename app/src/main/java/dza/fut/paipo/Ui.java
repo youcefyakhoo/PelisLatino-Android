@@ -7,6 +7,8 @@ import android.content.res.Configuration;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import java.util.Locale;
+
 /**
  * En qué tipo de aparato está corriendo la app.
  *
@@ -60,5 +62,26 @@ final class Ui {
     @NonNull
     static String tipoDeAparato(@Nullable Context contexto) {
         return esTelevision(contexto) ? "television" : "telefono";
+    }
+
+    /**
+     * Bandera del país como par de indicadores regionales: {@code "PE"} → 🇵🇪.
+     *
+     * <p>Se usa el emoji y no una imagen por tres razones: ya viene en la fuente
+     * del sistema (no hay que empaquetar 250 SVG ni pedirlas por red), se ve igual
+     * en teléfono y en TV, y no necesita permisos ni red. Si el aparato no tuviera
+     * fuente de emoji, el peor caso es que se vean las dos letras.
+     *
+     * <p>Devuelve "" si el código no son dos letras, para no pintar basura.
+     */
+    @NonNull
+    static String banderaEmoji(@Nullable String iso) {
+        if (iso == null || iso.length() != 2) return "";
+        String codigo = iso.toUpperCase(Locale.ROOT);
+        char a = codigo.charAt(0);
+        char b = codigo.charAt(1);
+        if (a < 'A' || a > 'Z' || b < 'A' || b > 'Z') return "";
+        return new String(Character.toChars(0x1F1E6 + (a - 'A')))
+                + new String(Character.toChars(0x1F1E6 + (b - 'A')));
     }
 }

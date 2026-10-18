@@ -7,6 +7,31 @@ import org.junit.Test;
 
 public class TileStyleTest {
 
+    /**
+     * v9.9: la bandera del país en la tira de categorías.
+     *
+     * <p>Se usa el emoji de indicadores regionales, así que el código ISO se
+     * convierte en dos puntos de código: U+1F1E6 + (letra - 'A'). Las banderas se
+     * escriben con escapes unicode para que el test no dependa de cómo se guarde
+     * este archivo. (Ojo: no se puede escribir la barra invertida suelta en un
+     * comentario, porque Java la interpreta antes de compilar.)
+     */
+    @Test
+    public void lasBanderasSalenDelCodigoIso() {
+        // PE = U+1F1F5 U+1F1EA, MX = U+1F1F2 U+1F1FD, AR = U+1F1E6 U+1F1F7
+        assertEquals("\uD83C\uDDF5\uD83C\uDDEA", Ui.banderaEmoji("PE"));
+        assertEquals("\uD83C\uDDF2\uD83C\uDDFD", Ui.banderaEmoji("mx"));
+        assertEquals("\uD83C\uDDE6\uD83C\uDDF7", Ui.banderaEmoji("AR"));
+        // Minúsculas y espacios sobrantes no rompen.
+        assertEquals("\uD83C\uDDF5\uD83C\uDDEA", Ui.banderaEmoji(" pe".trim().toUpperCase()));
+        // Basura: mejor nada que un cuadro vacío.
+        assertEquals("", Ui.banderaEmoji(null));
+        assertEquals("", Ui.banderaEmoji(""));
+        assertEquals("", Ui.banderaEmoji("P"));
+        assertEquals("", Ui.banderaEmoji("PER"));
+        assertEquals("", Ui.banderaEmoji("12"));
+    }
+
     // v9.3: vuelve la rejilla. Las capturas del Drama Live real (cur-00, nav-rt,
     // sec-tv) muestran 3 columnas de tiles cuadrados con el nombre dentro; la
     // v9.2 la habia cambiado a filas leyendo item_live_list.xml del APK, que no es

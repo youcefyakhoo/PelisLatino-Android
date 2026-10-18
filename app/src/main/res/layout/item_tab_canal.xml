@@ -3,6 +3,12 @@
      rótulo abajo. El estado selected lo gestiona el fragmento con setSelected(), que
      activa bg_canal_tab y los colores pelis_tab_*.
 
+     Dos "iconos" posibles, excluyentes:
+       - imgTabCanal: el glifo (grid, estrella…), con su tinte por estado.
+       - txtTabBandera: la bandera del país, como emoji. Drama pinta la bandera de
+         Peru en su pestaña de país; aquí sale del código ISO del tvg-id, sin
+         empaquetar 250 SVG.
+
      tools:ignore="UseCompoundDrawables": lint sugiere un solo TextView con drawableTop,
      pero eso quitaría el control del tamaño del ícono (30 dp) y de su lista de estados. -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -14,6 +20,17 @@
         android:id="@+id/imgTabCanal"
         style="@style/Widget.Blabongo.TabIcon"
         android:contentDescription="@null" />
+
+    <TextView
+        android:id="@+id/txtTabBandera"
+        android:layout_width="@dimen/canal_tab_icon"
+        android:layout_height="@dimen/canal_tab_icon"
+        android:gravity="center"
+        android:importantForAccessibility="no"
+        android:textSize="26sp"
+        android:visibility="gone"
+        tools:text="PE"
+        tools:visibility="visible" />
 
     <TextView
         android:id="@+id/txtTabCanal"

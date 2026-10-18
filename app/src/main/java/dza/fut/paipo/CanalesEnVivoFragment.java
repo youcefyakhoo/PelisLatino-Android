@@ -504,13 +504,14 @@ public class CanalesEnVivoFragment extends Fragment {
         for (String iso : isos) anadirTabPais(inflater, iso);
     }
 
-    /** Añade la pestaña de un país y la marca como tal para que el filtro la trate. */
+    /** Añade la pestaña de un país, con su bandera, y la marca como tal para el filtro. */
     private void anadirTabPais(@NonNull LayoutInflater inflater, @NonNull String iso) {
         String nombre = nombreDePais(iso);
         if (nombre.isEmpty()) return;
         clavesPais.add(nombre);
         Integer cuantos = conteoPaises.get(iso);
-        anadirTab(inflater, nombre, nombre, cuantos == null ? 0 : cuantos, R.drawable.ic_topic_grid);
+        anadirTab(inflater, nombre, nombre, cuantos == null ? 0 : cuantos,
+                R.drawable.ic_topic_grid, Ui.banderaEmoji(iso));
     }
 
     /**
@@ -540,12 +541,28 @@ public class CanalesEnVivoFragment extends Fragment {
 
     private void anadirTab(LayoutInflater inflater, String clave, String rotulo,
                            int cantidad, int icono) {
+        anadirTab(inflater, clave, rotulo, cantidad, icono, null);
+    }
+
+    /**
+     * @param bandera si no es nulo, en vez del glifo se pinta la bandera del país
+     *                (emoji). Lo usan las pestañas de país.
+     */
+    private void anadirTab(LayoutInflater inflater, String clave, String rotulo,
+                           int cantidad, int icono, @Nullable String bandera) {
         View tab = inflater.inflate(R.layout.item_tab_canal, contenedorTabs, false);
         TextView txt = tab.findViewById(R.id.txtTabCanal);
         ImageView img = tab.findViewById(R.id.imgTabCanal);
+        TextView txtBandera = tab.findViewById(R.id.txtTabBandera);
         txt.setText(rotulo);
         txt.setContentDescription(getString(R.string.canales_tab_desc, rotulo, cantidad));
-        img.setImageResource(icono);
+        if (bandera != null && !bandera.isEmpty() && txtBandera != null) {
+            img.setVisibility(View.GONE);
+            txtBandera.setText(bandera);
+            txtBandera.setVisibility(View.VISIBLE);
+        } else {
+            img.setImageResource(icono);
+        }
         tab.setTag(clave);
         tab.setSelected(clave.equals(topicoActivo));
         tab.setOnClickListener(v -> {
